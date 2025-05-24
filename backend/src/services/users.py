@@ -23,3 +23,5 @@ class UsersService:
     async def get_user(self, user_id: int):
         user = await self.users_repo.find_one(id=user_id)
         return user
+    
+    

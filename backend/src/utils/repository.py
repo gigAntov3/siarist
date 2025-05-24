@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 
 from sqlalchemy import and_, insert, select, update, delete
 
+from sqlalchemy import asc
+
 from database import async_session_maker
 
 
@@ -48,13 +50,16 @@ class SQLAlchemyRepository(BaseRepository):
             return result
         
     
-    async def find_all(self, limit: Optional[int] = None, offset: Optional[int] = None, **filters):
+    async def find_all(self, limit: Optional[int] = None, offset: Optional[int] = None, order_by: Optional[str] = None, **filters):
         async with async_session_maker() as session:
             stmt = select(self.model)
 
             if filters:
                 conditions = [getattr(self.model, key) == value for key, value in filters.items()]
                 stmt = stmt.where(and_(*conditions))
+
+            if order_by:
+                stmt = stmt.order_by(asc(getattr(self.model, order_by)))  # сортировка по возрастанию
 
             if limit is not None:
                 stmt = stmt.limit(limit)

@@ -20,6 +20,13 @@ class UserModel(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    # Связь с отзывами — обратная сторона отношений (FeedbackModel должен быть определён и импортирован)
+    feedbacks = relationship(
+        "FeedbackModel",           # строка с именем модели для отложенной загрузки
+        back_populates="author",   # имя обратной связи в FeedbackModel
+        cascade="all, delete-orphan"
+    )
+
     def to_read_model(self) -> UserSchema:
         return UserSchema(
             id=self.id,
