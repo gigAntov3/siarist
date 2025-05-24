@@ -1,0 +1,75 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    gap: 20px;
+}
+
+.productName,
+.productDescription,
+.productPrice {
+    text-align: left;
+    width: 100%;
+    color: #fff;
+}
+
+.productName {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.productDescription {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.productPrice {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+
+
+.productBuy {
+    background-color: #009c70;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    border-radius: 40px;
+}
+
+.productBuy p {
+    background-color: #009c70;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    border-radius: 40px;
+}
+
+
+
+
+.tabBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #212121;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #333;
+    border-radius: 24px 24px 0 0;
+    z-index: 1000;
+    padding: 30px 60px 40px 60px; /* top right bottom left */
+}
+
+/* Отступы для каждой иконки */
+.tabBar svg {
+    background-color: #212121;
+    width: 16px;
+    height: 16px;
+    fill: white;
+    box-sizing: content-box; /* чтобы padding не сжимал иконку */
+}

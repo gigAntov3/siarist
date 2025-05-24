@@ -1,0 +1,140 @@
+.container {
+  background-color: #2a2a2a;
+  color: white;
+  border-radius: 20px 20px 0 0;
+  margin: auto;
+  font-family: sans-serif;
+  padding: 14px 30px;
+  height: 100vh;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #2a2a2a;
+}
+
+.backIcon {
+  width: 21px;
+  height: 21px;
+  cursor: pointer;
+  fill: #fff;
+  background-color: #2a2a2a;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 24px 0 24px;
+  background-color: #2a2a2a;
+}
+
+/* Группа радио-кнопок */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  background-color: #2a2a2a;
+}
+
+/* Элемент радио */
+.radioItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  padding: 8px 0;
+  color: white;
+  background-color: #2a2a2a;
+}
+
+/* Название платформы */
+.radioName {
+  background-color: #2a2a2a;
+}
+
+/* Контейнер для радио-инпута или иконки */
+.radioCustom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid #7d7f80;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Активная платформа — зелёный фон */
+.radioSelected {
+  background-color: #009c70;
+  border: 2px solid #009c70;
+}
+
+/* Иконка галочки */
+.chevronIcon {
+  width: 16px;
+  height: 16px;
+  color: white;
+  background-color: #009c70;
+}
+
+/* Скрытая стандартная радио-кнопка (не показываем визуально) */
+.radioInput {
+  display: none;
+}
+
+/* Поля ввода */
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-color: #222;
+  color: white;
+  font-size: 16px;
+  transition: border 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #009c70;
+  background-color: #2a2a2a;
+}
+
+/* Стили placeholder */
+.input::placeholder {
+  color: #888;
+}
+
+/* Кнопка сохранения */
+.button {
+  width: 100%;
+  padding: 14px;
+  background-color: #009c70;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background-color: #007e5c;
+}
+
+/* Разделитель */
+.separator {
+  border: none;
+  border-top: 1px solid #444343;
+  margin: 12px 0;
+  margin-bottom: 30px;
+}

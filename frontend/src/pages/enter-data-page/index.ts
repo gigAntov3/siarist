@@ -1,0 +1,1 @@
+export { EnterDataPage } from './ui';

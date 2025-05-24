@@ -1,0 +1,6 @@
+aiogram_dialog
+aiosqlite
+sqlalchemy
+openpyxl
+apscheduler
+python-dotenv
