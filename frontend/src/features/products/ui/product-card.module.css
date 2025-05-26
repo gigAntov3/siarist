@@ -1,0 +1,48 @@
+.card {
+    border-radius: 16px;
+    width: calc(50% - 8px);
+    box-sizing: border-box;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #212121;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+
+.card span {
+    margin-bottom: 6px;
+    color: #fff;
+    background-color: #212121;
+}
+
+
+.name {
+    font-size: 15px;
+    font-weight: normal;
+    text-align: left;
+    width: 100%;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+
+.buyButton {
+    background-color: #009c70;
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    border-radius: 40px;
+}

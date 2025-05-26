@@ -18,8 +18,12 @@ class ProductsService:
         product = await self.products_repo.find_one(product_id)
         return product
     
-    async def get_products(self, limit: Optional[int] = None, offset: Optional[int] = None):
-        products = await self.products_repo.find_all(limit=limit, offset=offset)
+    async def get_products(self, category_id: Optional[int] = None, limit: Optional[int] = None, offset: Optional[int] = None):
+        if category_id is None:
+            products = await self.products_repo.find_all(limit=limit, offset=offset)
+            return products
+        
+        products = await self.products_repo.find_all(limit=limit, offset=offset, category_id=category_id)
         return products
     
     async def update_product(self, product_id: int, product: ProductUpdateSchema):

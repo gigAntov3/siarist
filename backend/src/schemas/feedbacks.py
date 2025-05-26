@@ -2,6 +2,8 @@ from typing import List
 from datetime import datetime
 from pydantic import BaseModel
 
+from .users import UserSchema
+
 
 class FeedbackAddSchema(BaseModel):
     content: str
@@ -18,8 +20,11 @@ class AnswerFeedbackAddSchema(BaseModel):
     feedback_id: int
 
 
-class FeedbackSchema(FeedbackAddSchema):
+class FeedbackSchema(BaseModel):
     id: int
+    content: str
+    priority: int
+    author: UserSchema
     created_at: datetime
     updated_at: datetime
     

@@ -32,7 +32,7 @@ class FeedbackModel(Base):
             id=self.id,
             content=self.content,
             priority=self.priority,
-            author_id=self.author_id,
+            author=self.author.to_read_model() if self.author else None,
             created_at=self.created_at,
             updated_at=self.updated_at
         )

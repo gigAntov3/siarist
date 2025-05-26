@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query
 
-from typing import Annotated
+from typing import Optional,Annotated
 
 from schemas.products import (
     ProductSchema,
@@ -36,10 +36,11 @@ async def add_profile(
 @router.get("")
 async def get_profiles(
     products_service: Annotated[ProductsService, Depends(products_service)],
+    category_id: Optional[int] = Query(None, description="Filter products by category ID"),
     limit: int = Query(10, ge=1),
     offset: int = Query(0, ge=0),
 ) -> AnswerProductsSchema:
-    products = await products_service.get_products(limit=limit, offset=offset)
+    products = await products_service.get_products(category_id=category_id, limit=limit, offset=offset)
     return AnswerProductsSchema(ok=True, message="Products retrieved successfully", products=products)
 
 

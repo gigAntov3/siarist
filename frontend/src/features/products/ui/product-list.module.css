@@ -1,26 +1,23 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 16px;
-}
-
-
-.feedbackContainer {
     background-color: #212121;
-    padding: 32px 24px;
     border-radius: 24px;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
-
-.feedbackTitle {
+.categoryTitle {
     font-size: 20px;
     font-weight: bold;
     color: #ffffff;
     background-color: #212121;
-    margin-bottom: 16px;
+    margin-bottom: 100px;
     display: block;
     margin-bottom: 16px;
+}
+
+.productsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    background-color: #212121;
 }

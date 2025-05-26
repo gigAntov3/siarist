@@ -38,6 +38,7 @@ async def get_feedback(
     feedback = await feedbacks_service.get_feedback(feedback_id)
     return AnswerFeedbackSchema(ok=True, message="Feedback retrieved", feedback=feedback)
 
+import time
 
 @router.get("")
 async def get_feedbacks(

@@ -1,126 +1,38 @@
-import FifaImage from './assets/fifa.png';
-import ProductImage from './assets/product.png';
-import UserImage from './assets/user.png';
-
 import styles from './styles.module.css';
-import { Link } from 'react-router-dom';
 import { TabBar } from '../../shared/ui/tabbar';
+import { PromoCarousel } from '../../widgets/promo-carousel';
+// import { ProductList } from '../../features/products/ui/product-list';
+import { Separator } from '../../shared/ui/separator';
+import { FeedbackCard } from '../../features/feedback/ui/feedback-card';
+import { Catalog } from '../../widgets/catalog/ui';
 
 export const HomePage = () => {
     return (
         <div className={styles.wrapper}>
-            <div className={styles.imageContainer}>
-                <img src={FifaImage} alt="fifa" />
-            </div>
+            <PromoCarousel />
 
-            <div className={styles.dotsContainer}>
-                <span className={`${styles.dot} ${styles.active}`}></span>
-                <span className={styles.dot}></span>
-                <span className={styles.dot}></span>
-            </div>
+            <Catalog />
 
-            <div className={styles.productsContainer}>
-                <span className={styles.categoryName}>Игровая валюта</span>
+            {/* <div className={styles.productsContainer}>
+                <ProductList title="Игровая валюта" category_id={1} />
 
-                <div className={styles.productsList}>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                </div>
+                <Separator />
 
-                <hr className={styles.separator} />
-
-                <span className={styles.categoryName}>Звездный абонемент</span>
-
-                <div className={styles.productsList}>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                    <div className={styles.productItem}>
-                        <img src={ProductImage} alt="product" />
-                        <span className={styles.productName}>EA SPORTS FC™ 24 — 12 000 FC Points</span>
-                        <span className={styles.productPrice}>12 000 ₽</span>
-                        <Link className={styles.productInfo} to="/product">
-                            Купить
-                        </Link>
-                    </div>
-                </div>
-            </div>
+                <ProductList title="Звездный абонемент" category_id={2} />
+            </div> */}
 
             <div className={styles.feedbackContainer}>
                 <span className={styles.feedbackTitle}>Отзывы</span>
 
+                <FeedbackCard date="16 мая 2024" text="Сделали быстро и прозрачно. Простое и понятное оформление заказа" userName="Dani******" />
 
-                <div className={styles.feedback}>
-                    <div className={styles.feedbackDate}>16 мая 2024</div>
-                    <div className={styles.feedbackText}>Сделали быстро и прозрачно. Простое и понятное оформление заказа</div>
+                <Separator />
 
-                    <div className={styles.feedbackUser}>
-                        <img className={styles.feedbackUserPhoto} src={UserImage} alt="user" />
-                        <div className={styles.feedbackUserName}>Dani*******</div>
-                    </div>
+                <FeedbackCard date="16 мая 2024" text="Сделали быстро и прозрачно. Простое и понятное оформление заказа" userName="Dani******" />
 
-                </div>
+                <Separator />
 
-                <hr className={styles.separator} />
-
-                <div className={styles.feedback}>
-                    <div className={styles.feedbackDate}>16 мая 2024</div>
-                    <div className={styles.feedbackText}>Сделали быстро и прозрачно. Простое и понятное оформление заказа</div>
-
-                    <div className={styles.feedbackUser}>
-                        <img className={styles.feedbackUserPhoto} src={UserImage} alt="user" />
-                        <div className={styles.feedbackUserName}>Dani*******</div>
-                    </div>
-
-                </div>
-
-                <hr className={styles.separator} />
-
-                <div className={styles.feedback}>
-                    <div className={styles.feedbackDate}>16 мая 2024</div>
-                    <div className={styles.feedbackText}>Сделали быстро и прозрачно. Простое и понятное оформление заказа</div>
-
-                    <div className={styles.feedbackUser}>
-                        <img className={styles.feedbackUserPhoto} src={UserImage} alt="user" />
-                        <div className={styles.feedbackUserName}>Dani*******</div>
-                    </div>
-
-                </div>
+                <FeedbackCard date="16 мая 2024" text="Сделали быстро и прозрачно. Простое и понятное оформление заказа" userName="Dani******" />
             </div>
 
             <TabBar />

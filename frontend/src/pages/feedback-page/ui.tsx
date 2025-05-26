@@ -1,86 +1,74 @@
-import { FeedbackCard } from '../../features/feedback/ui/feedback-card';
-import { Separator } from '../../shared/ui/separator';
-import { TabBar } from '../../shared/ui/tabbar';
-import styles from './styles.module.css';
+import { useEffect, useRef } from "react";
+import { observer } from "mobx-react-lite";
+import { FeedbackCard } from "../../features/feedback/ui/feedback-card";
+import { Separator } from "../../shared/ui/separator";
+import { TabBar } from "../../shared/ui/tabbar";
+import styles from "./styles.module.css";
+import { feedbackStore } from "./store";
 
+const adaptFeedback = (raw) => ({
+  date: new Date(raw.created_at).toLocaleDateString("ru-RU", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }),
+  text: raw.content,
+  userName: `${raw.author.first_name} ${raw.author.last_name}`,
+});
 
-const feedbacks = [
-    {
-        date: '16 мая 2024',
-        text: 'Все понравилось! Заказ оформили за пару минут, всё прозрачно и честно.',
-        userName: 'Elena******',
-    },
-    {
-        date: '17 мая 2024',
-        text: 'Хороший сервис. Немного пришлось подождать, но результат устроил.',
-        userName: 'Ivan*******',
-    },
-    {
-        date: '18 мая 2024',
-        text: 'Очень быстро и удобно. Рекомендую всем, кто ценит своё время.',
-        userName: 'Nata*******',
-    },
-    {
-        date: '19 мая 2024',
-        text: 'Не совсем понял процесс оформления, но оператор быстро помог. Спасибо!',
-        userName: 'Sergei*****',
-    },
-    {
-        date: '20 мая 2024',
-        text: 'Все прошло гладко. Никаких скрытых условий, что приятно удивило.',
-        userName: 'Olga*******',
-    },
-    {
-        date: '21 мая 2024',
-        text: 'Могло быть и быстрее. Но в целом всё понятно и по делу.',
-        userName: 'Alexey****',
-    },
-    {
-        date: '22 мая 2024',
-        text: 'Прекрасный опыт! Сайт интуитивно понятный, оформление заняло пару минут.',
-        userName: 'Tatiana***',
-    },
-    {
-        date: '23 мая 2024',
-        text: 'Не понравилось, что пришлось загружать документы дважды. Поддержка сработала хорошо.',
-        userName: 'Roman*****',
-    },
-    {
-        date: '24 мая 2024',
-        text: 'Сервис на высоте! Уже третий раз пользуюсь — всё стабильно и без проблем.',
-        userName: 'Marina****',
-    },
-    {
-        date: '25 мая 2024',
-        text: 'Было немного непонятно на этапе выбора услуги, но в остальном отлично.',
-        userName: 'Dmitriy***',
-    },
-    {
-        date: '26 мая 2024',
-        text: 'Не сделали быстро и прозрачно. Была путаница в деталях заказа.',
-        userName: 'Andrei****',
-    },
-];
+export const FeedbackPage = observer(() => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    feedbackStore.loadMore(); // начальная загрузка
+  }, []);
 
-export const FeedbackPage = () => {
-    return (
-        <div>
-            <div className={styles.feedbackContainer}>
-                <div className={styles.titleWrapper}>
-                    <span className={styles.feedbackTitle}>Отзывы</span>
-                    <span className={styles.numberReviews}>5000</span>
-                </div>
-
-                {feedbacks.map((fb, idx) => (
-                    <div className={styles.feedbackItems} key={idx}>
-                        <FeedbackCard {...fb} />
-                        {idx !== feedbacks.length - 1 && <Separator />}
-                    </div>
-                ))}
-            </div>
-
-            <TabBar />
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          feedbackStore.loadMore();
+        }
+      },
+      {
+        rootMargin: "200px",
+      }
     );
-};
+
+    const target = bottomRef.current;
+    if (target) observer.observe(target);
+    return () => target && observer.unobserve(target);
+  }, []);
+
+  return (
+    <div>
+      <div className={styles.feedbackContainer}>
+        <div className={styles.titleWrapper}>
+          <span className={styles.feedbackTitle}>Отзывы</span>
+          <span className={styles.numberReviews}>5000</span>
+        </div>
+
+        {feedbackStore.feedbacks.map((fb, idx) => {
+          const adapted = adaptFeedback(fb);
+          return (
+            <div className={styles.feedbackItems} key={fb.id}>
+              <FeedbackCard {...adapted} />
+              {idx !== feedbackStore.feedbacks.length - 1 && <Separator />}
+            </div>
+          );
+        })}
+
+        <div ref={bottomRef} style={{ height: 1 }} />
+
+        {feedbackStore.loading && (
+          <div className={styles.loadingText}>Загрузка...</div>
+        )}
+      </div>
+
+      <TabBar />
+    </div>
+  );
+});
+
+
+// 11111111
