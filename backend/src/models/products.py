@@ -11,6 +11,7 @@ from schemas.products import ProductSchema
 
 if TYPE_CHECKING:
     from models.categories import CategoryModel
+    from models.basket import BasketModel
 
 
 class ProductModel(Base):
@@ -24,6 +25,8 @@ class ProductModel(Base):
 
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
     category: Mapped[CategoryModel] = relationship(back_populates="products")
+
+    baskets: Mapped[list[BasketModel]] = relationship("BasketModel", back_populates="product", cascade="all, delete-orphan")
 
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)

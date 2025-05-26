@@ -1,0 +1,35 @@
+.productControls {
+    display: flex;
+    flex-direction: column; /* вертикально */
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    background-color: #212121;
+}
+
+.controlButton {
+    background-color: #2e2e2e;
+    border: none;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.controlButton svg {
+    width: 16px;
+    height: 16px;
+    background-color: #2e2e2e;
+}
+
+.quantity {
+    color: #ffffff;
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+    background-color: #212121;
+}

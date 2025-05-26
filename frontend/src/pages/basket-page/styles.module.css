@@ -68,7 +68,7 @@
 
 .productControls {
     display: flex;
-    flex-direction: column; /* вертикально */
+    flex-direction: column;
     align-items: center;
     gap: 4px;
     flex-shrink: 0;
