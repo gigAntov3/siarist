@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@telegram-apps/sdk": "^3.10.0",
+    "@telegram-apps/sdk-react": "^3.3.0",
     "antd": "^5.17.0",
     "axios": "^1.9.0",
     "mobx": "6.13.7",

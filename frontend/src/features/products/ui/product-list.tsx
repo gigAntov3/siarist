@@ -48,7 +48,7 @@ export const ProductList = ({ title, category_id }: Props) => {
                         id={product.id}
                         name={product.name}
                         price={product.price}
-                        image={ProductImage}
+                        image={product.photo || ProductImage}
                     />
                 ))}
             </div>

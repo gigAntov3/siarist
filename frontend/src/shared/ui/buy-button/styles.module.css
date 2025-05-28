@@ -1,0 +1,57 @@
+:root {
+    --primary: #009c70;
+    --white: #fff;
+    --radius-lg: 40px;
+    --radius-sm: 8px;
+    --font-size: 16px;
+}
+
+.wrapper {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: var(--font-size);
+    padding: 12px 20px;
+    width: 100%; /* возможно, лучше убрать или задать max-width */
+    border-radius: var(--radius-lg);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* вместо space-between */
+    background-color: var(--primary);
+    width: 100%; /* возможно, лучше убрать или задать max-width */
+    border-radius: var(--radius-sm);
+}
+
+.quantity {
+    position: static; /* или просто убрать позиционирование */
+    min-width: 28px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--white);
+    pointer-events: none;
+    background-color: var(--primary);
+}
+
+.iconButton {
+    background-color: var(--primary); /* зелёный фон */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    /* добавить для безопасности */
+    background: var(--primary);
+}
+
+.iconButton svg {
+    background: transparent;
+    fill: var(--white);
+}

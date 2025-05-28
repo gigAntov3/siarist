@@ -67,3 +67,8 @@
     color: #666;
     font-size: 14px;
 }
+
+.bottomRef {
+    height: 1px;
+    background-color: #212121;
+}

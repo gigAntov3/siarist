@@ -16,7 +16,8 @@ class UserModel(Base):
     first_name: Mapped[str]
     last_name: Mapped[str] = mapped_column(nullable=True)
     username: Mapped[str] = mapped_column(nullable=True)
-    balance: Mapped[int]
+    balance: Mapped[int] = mapped_column(default=0)
+    purchases_count: Mapped[int] = mapped_column(default=0)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -35,6 +36,7 @@ class UserModel(Base):
             last_name=self.last_name,
             username=self.username,
             balance=self.balance,
+            purchases_count=self.purchases_count,
             created_at=self.created_at,
             updated_at=self.updated_at
         )

@@ -22,6 +22,7 @@ class ProductModel(Base):
     description: Mapped[str] = mapped_column(nullable=True)
     price: Mapped[int]
     tag: Mapped[str] = mapped_column(nullable=True)
+    photo: Mapped[str] = mapped_column(nullable=True)
 
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
     category: Mapped[CategoryModel] = relationship(back_populates="products")
@@ -38,6 +39,7 @@ class ProductModel(Base):
             description=self.description,
             price=self.price,
             tag=self.tag,
+            photo=self.photo,
             category_id=self.category_id,
             created_at=self.created_at,
             updated_at=self.updated_at

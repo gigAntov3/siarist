@@ -8,6 +8,7 @@ class ProductAddSchema(BaseModel):
     description: str | None
     price: int
     tag: str | None
+    photo: str | None
     category_id: int
 
     class Config:

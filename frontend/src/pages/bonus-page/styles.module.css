@@ -6,8 +6,12 @@
 }
 
 .imageContainer {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* или нужная максимальная ширина */
+  height: 220px; /* или auto, или фиксированная высота */
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .cardImage {
@@ -59,7 +63,7 @@
 }
 
 .progressFill {
-    width: 60%;
+    transition: width 0.4s ease;
     height: 100%;
     background-color: #00c896;
 }

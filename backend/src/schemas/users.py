@@ -9,6 +9,7 @@ class UserAddSchema(BaseModel):
     last_name: str | None
     username: str | None
     balance: int
+    purchases_count: int
 
     class Config:
         from_attributes = True

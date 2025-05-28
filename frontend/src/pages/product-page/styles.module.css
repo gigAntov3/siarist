@@ -73,3 +73,34 @@
     fill: white;
     box-sizing: content-box; /* чтобы padding не сжимал иконку */
 }
+
+
+.quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.quantityText {
+    min-width: 24px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.buyButton {
+    padding: 8px 16px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

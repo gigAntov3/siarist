@@ -58,7 +58,7 @@ export const FeedbackPage = observer(() => {
           );
         })}
 
-        <div ref={bottomRef} style={{ height: 1 }} />
+        <div ref={bottomRef} className={ styles.bottomRef } />
 
         {feedbackStore.loading && (
           <div className={styles.loadingText}>Загрузка...</div>
@@ -69,6 +69,3 @@ export const FeedbackPage = observer(() => {
     </div>
   );
 });
-
-
-// 11111111

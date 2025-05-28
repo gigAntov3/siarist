@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 
 import styles from './styles.module.css';
 
-import PlusIcon from './assets/plus.svg?react';
-import MinusIcon from './assets/minus.svg?react';
-import ProductImage from './assets/product.png';
-
 import { TabBar } from '../../shared/ui/tabbar';
 import { Separator } from '../../shared/ui/separator';
 import { BasketProductList } from '../../features/basket/ui/product-list';
@@ -55,28 +51,45 @@ export const BusketPage = () => {
     <div className={styles.wrapper}>
       <div className={styles.title}>Корзина</div>
 
-      <BasketProductList baskets={baskets} onQuantityChange={handleQuantityChange} />
-
-      <Separator />
-
-      <div className={styles.bonusWrapper}>
-        <div className={styles.bonusInfo}>
-          <div className={styles.bonusLabel}>Бонусы</div>
-          <div className={styles.bonusAmount}>750 ₽</div>
+      {baskets.length === 0 ? (
+        <div className={styles.emptyState}>
+          <div className={styles.emptyTitle}>В корзине пока пусто</div>
+          <div className={styles.emptySubtitle}>
+            Загляните <Link to="/" className={styles.emptyLink}>на главную</Link> — собрали там товары,<br />
+            которые могут вам понравиться
+          </div>
         </div>
-        <button className={styles.bonusButton}>Списать</button>
-      </div>
+      ) : (
+        <>
+          <BasketProductList
+            baskets={baskets}
+            onQuantityChange={handleQuantityChange}
+          />
 
-      <hr className={styles.separator} />
+          <Separator />
 
-      <div className={styles.totalWrapper}>
-        <div className={styles.totalLabel}>Итого</div>
-        <div className={styles.totalAmount}>{totalPrice.toLocaleString()} ₽</div>
-      </div>
+          <div className={styles.bonusWrapper}>
+            <div className={styles.bonusInfo}>
+              <div className={styles.bonusLabel}>Бонусы</div>
+              <div className={styles.bonusAmount}>750 ₽</div>
+            </div>
+            <button className={styles.bonusButton}>Списать</button>
+          </div>
 
-      <Link to={'/enter-data'}>
-        <button className={styles.buyButton}>Купить</button>
-      </Link>
+          <hr className={styles.separator} />
+
+          <div className={styles.totalWrapper}>
+            <div className={styles.totalLabel}>Итого</div>
+            <div className={styles.totalAmount}>
+              {totalPrice.toLocaleString()} ₽
+            </div>
+          </div>
+
+          <Link to={'/enter-data'}>
+            <button className={styles.buyButton}>Купить</button>
+          </Link>
+        </>
+      )}
 
       <TabBar />
     </div>
