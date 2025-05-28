@@ -9,13 +9,14 @@ type Props = {
     name: string;
     price: number;
     quantity: number;
+    photo: string
     onQuantityChange?: (newQuantity: number) => void;
 }
 
-export const BasketProductCard = ({ basketId, name, price, quantity, onQuantityChange }: Props) => {
+export const BasketProductCard = ({ basketId, name, price, quantity, photo, onQuantityChange }: Props) => {
   return (
     <div className={styles.productItem}>
-      <img className={styles.productImage} src={ProductImage} alt="product" />
+      <img className={styles.productImage} src={photo || ProductImage} alt="product" />
 
       <div className={styles.productInfo}>
         <div className={styles.productName}>{name}</div>

@@ -8,8 +8,6 @@ export const getProducts = async (category_id: number | null, limit = 10, offset
         params: { category_id, limit, offset },
     });
 
-    console.log(response.data);
-
     return response.data.products;
 };
 

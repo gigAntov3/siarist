@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate } from "react-router-dom";
 
 import CheckIcon from "./assets/check.svg?react";
 import ChevronLeftIcon from "./assets/chevron-left.svg?react";
 
 import styles from "./styles.module.css";
 
-export const EnterDataPage = ({ onClose }: { onClose: () => void }) => {
+export const EnterAccountModal = ({
+  onClose,
+  onSave,
+}: {
+  onClose: () => void;
+  onSave: () => void;
+}) => {
   const [platform, setPlatform] = useState("Google Play");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +20,7 @@ export const EnterDataPage = ({ onClose }: { onClose: () => void }) => {
   };
 
   const handleSubmit = () => {
-    onClose(); // Закрываем текущую модалку, BusketPage покажет следующую
+    onSave(); // Закрываем модалку и сообщаем родителю о сохранении
   };
 
   return createPortal(

@@ -1,0 +1,134 @@
+/* Контейнер модального окна */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modalContent {
+  width: 100%;
+  max-height: 90%;
+  background-color: #2a2a2a;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 30px;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  background-color: #2a2a2a;
+}
+
+.backIcon {
+  width: 21px;
+  height: 21px;
+  cursor: pointer;
+  fill: white;
+  background-color: #2a2a2a;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #2a2a2a;
+}
+
+/* Группа радио-кнопок */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  background-color: #2a2a2a;
+}
+
+/* Элемент радио */
+.radioItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  padding: 10px 0;
+  color: white;
+  background-color: #2a2a2a;
+}
+
+/* Название способа оплаты */
+.radioName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #2a2a2a;
+}
+
+.radioName svg {
+  width: 24px;
+  height: 24px;
+  background-color: #2a2a2a;
+}
+
+/* Иконки оплаты */
+.paymentIcon {
+  width: 24px;
+  height: 24px;
+  background-color: #2a2a2a;
+}
+
+/* Радио-индикатор */
+.radioCustom {
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  border: 2px solid #7d7f80;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #2a2a2a;
+}
+
+.radioSelected {
+  background-color: #009c70;
+  border-color: #009c70;
+}
+
+.chevronIcon {
+  width: 16px;
+  height: 16px;
+  color: white;
+  background-color: #009c70;
+}
+
+.radioInput {
+  display: none;
+}
+
+/* Кнопка подтверждения */
+.button {
+  width: 100%;
+  padding: 14px;
+  background-color: #009c70;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background-color: #007e5c;
+}

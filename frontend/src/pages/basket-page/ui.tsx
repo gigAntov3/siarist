@@ -9,26 +9,38 @@ import { BasketProductList } from '../../features/basket/ui/product-list';
 
 import type { Basket } from '../../shared/api/basket/model';
 import { getBaskets } from '../../shared/api/basket';
+import { getUser } from '../../shared/api/users';
+
+import { PaymentMethodModal } from '../../widgets/payment-method-modal';
+import { EnterAccountModal } from '../../widgets/enter-account-modal';
 
 export const BusketPage = () => {
   const [baskets, setBaskets] = useState<Basket[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [bonuses, setBonuses] = useState<number>(0);
+  const [showDataModal, setShowDataModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBaskets = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getBaskets();
-        setBaskets(data);
+        const [basketsData, userData] = await Promise.all([
+          getBaskets(),
+          getUser(1),
+        ]);
+        setBaskets(basketsData);
+        setBonuses(userData.balance);
       } catch (err) {
         console.error(err);
-        setError('Ошибка при загрузке корзины');
+        setError('Ошибка при загрузке данных');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBaskets();
+    fetchData();
   }, []);
 
   const handleQuantityChange = (basketId: number, newQuantity: number) => {
@@ -43,6 +55,26 @@ export const BusketPage = () => {
     (acc, basket) => acc + basket.quantity * basket.product.price,
     0
   );
+
+  const handleDataModalClose = () => {
+    setShowDataModal(false);
+  };
+
+  const handlePaymentClick = () => {
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentSelect = (method: string) => {
+    setSelectedPaymentMethod(method);
+    setShowPaymentModal(false);
+    console.log('Выбран способ оплаты:', method);
+    // Здесь можно выполнить финальную отправку данных
+  };
+
+  const handleDataModalSave = () => {
+    setShowDataModal(false);
+    setShowPaymentModal(true);
+  };
 
   if (loading) return <div className={styles.wrapper}>Загрузка...</div>;
   if (error) return <div className={styles.wrapper}>{error}</div>;
@@ -71,7 +103,7 @@ export const BusketPage = () => {
           <div className={styles.bonusWrapper}>
             <div className={styles.bonusInfo}>
               <div className={styles.bonusLabel}>Бонусы</div>
-              <div className={styles.bonusAmount}>750 ₽</div>
+              <div className={styles.bonusAmount}>{bonuses.toLocaleString()} ₽</div>
             </div>
             <button className={styles.bonusButton}>Списать</button>
           </div>
@@ -85,9 +117,20 @@ export const BusketPage = () => {
             </div>
           </div>
 
-          <Link to={'/enter-data'}>
-            <button className={styles.buyButton}>Купить</button>
-          </Link>
+          <button className={styles.buyButton} onClick={() => setShowDataModal(true)}>
+            Купить
+          </button>
+
+          {showDataModal && <EnterAccountModal
+            onClose={handleDataModalClose}  // Закрытие без сохранения
+            onSave={handleDataModalSave}    // Закрытие с сохранением, открыть окно оплаты
+          />}
+          {showPaymentModal && (
+            <PaymentMethodModal
+              onClose={() => setShowPaymentModal(false)}
+              onSelect={handlePaymentSelect}
+            />
+          )}
         </>
       )}
 

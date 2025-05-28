@@ -21,6 +21,7 @@ export const BasketProductList = ({ baskets, onQuantityChange }: Props) => {
             name={basket.product.name}
             price={basket.product.price}
             quantity={basket.quantity}
+            photo={basket.product.photo}
             onQuantityChange={(newQty) => onQuantityChange(basket.id, newQty)}
           />
           {index !== baskets.length - 1 && <Separator />}
