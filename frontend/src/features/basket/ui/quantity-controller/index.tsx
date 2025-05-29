@@ -4,15 +4,16 @@ import MinusIcon from '../../assets/minus.svg?react';
 
 import styles from "./styles.module.css";
 
-import { decreaseBasketQuantity, increaseBasketQuantity } from "../../../../shared/api/basket";
+import { decreaseBasketQuantity, deleteBasket, increaseBasketQuantity } from "../../../../shared/api/basket";
 
 type Props = {
   basketId: number;
   quantity: number;
   onQuantityChange?: (newQuantity: number) => void;
+  onDelete?: () => void; // ✅ добавляем проп
 };
 
-export const QuantityController = ({ basketId, quantity, onQuantityChange }: Props) => {
+export const QuantityController = ({ basketId, quantity, onQuantityChange, onDelete }: Props) => {
   const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
   const [loading, setLoading] = useState(false);
 
@@ -30,15 +31,26 @@ export const QuantityController = ({ basketId, quantity, onQuantityChange }: Pro
   };
 
   const handleDecrease = async () => {
-    if (loading || currentQuantity <= 1) return;
-
+    if (loading) return;
     setLoading(true);
-    const ok = await decreaseBasketQuantity(basketId);
-    if (ok) {
-      const newQuantity = currentQuantity - 1;
-      setCurrentQuantity(newQuantity);
-      onQuantityChange?.(newQuantity);
+
+    let ok = false;
+
+    if (currentQuantity <= 1) {
+      ok = await deleteBasket(basketId);
+      if (ok) {
+        onQuantityChange?.(0); // можно использовать, если родителю нужно знать
+        onDelete?.(); // ✅ вызываем onDelete
+      }
+    } else {
+      ok = await decreaseBasketQuantity(basketId);
+      if (ok) {
+        const newQuantity = currentQuantity - 1;
+        setCurrentQuantity(newQuantity);
+        onQuantityChange?.(newQuantity);
+      }
     }
+
     setLoading(false);
   };
 
@@ -48,7 +60,8 @@ export const QuantityController = ({ basketId, quantity, onQuantityChange }: Pro
         <PlusIcon />
       </button>
       <span className={styles.quantity}>{currentQuantity}</span>
-      <button className={styles.controlButton} onClick={handleDecrease} disabled={loading || currentQuantity <= 1}>
+      {/* ✅ теперь кнопка не дизейблится при quantity === 1 */}
+      <button className={styles.controlButton} onClick={handleDecrease} disabled={loading}>
         <MinusIcon />
       </button>
     </div>

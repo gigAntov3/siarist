@@ -28,6 +28,8 @@ class UserModel(Base):
         cascade="all, delete-orphan"
     )
 
+    orders = relationship("OrderModel", back_populates="user", cascade="all, delete-orphan")
+
     def to_read_model(self) -> UserSchema:
         return UserSchema(
             id=self.id,

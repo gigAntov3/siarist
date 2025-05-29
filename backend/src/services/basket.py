@@ -34,3 +34,11 @@ class BasketService:
     async def decrease_quantity(self, basket_id: int) -> bool:
         is_decreased = await self.basket_repo.decrease_quantity(basket_id)
         return is_decreased
+    
+
+    async def delete_baskets(self, user_id: Optional[int] = None):
+        await self.basket_repo.delete_all()
+
+    
+    async def delete_basket(self, basket_id: int):
+        await self.basket_repo.delete_one(basket_id)

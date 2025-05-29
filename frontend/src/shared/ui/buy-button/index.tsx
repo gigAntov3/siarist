@@ -7,7 +7,8 @@ import MinusIcon from '../../assets/minus.svg?react';
 import {
     addProductToBasket,
     increaseBasketQuantity,
-    decreaseBasketQuantity
+    decreaseBasketQuantity,
+    deleteBasket
 } from "../../../shared/api/basket";
 
 interface BuyControlProps {
@@ -38,14 +39,24 @@ export const BuyButton = ({
     };
 
     const handleIncrease = async () => {
+        if (!basketId) return;
         const success = await increaseBasketQuantity(basketId);
         if (success) setQuantity((prev) => prev + 1);
     };
 
     const handleDecrease = async () => {
-        if (quantity <= 0) return;
-        const success = await decreaseBasketQuantity(basketId);
-        if (success) setQuantity((prev) => Math.max(0, prev - 1));
+        if (quantity <= 0 || !basketId) return;
+
+        if (quantity === 1) {
+            const ok = await deleteBasket(basketId);
+            if (ok) {
+                setQuantity(0);
+                setBasketId(null);
+            }
+        } else {
+            const success = await decreaseBasketQuantity(basketId);
+            if (success) setQuantity((prev) => prev - 1);
+        }
     };
 
     if (quantity > 0) {

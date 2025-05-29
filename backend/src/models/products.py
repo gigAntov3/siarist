@@ -12,6 +12,7 @@ from schemas.products import ProductSchema
 if TYPE_CHECKING:
     from models.categories import CategoryModel
     from models.basket import BasketModel
+    from models.orders import OrderProductsModel
 
 
 class ProductModel(Base):
@@ -28,6 +29,8 @@ class ProductModel(Base):
     category: Mapped[CategoryModel] = relationship(back_populates="products")
 
     baskets: Mapped[list[BasketModel]] = relationship("BasketModel", back_populates="product", cascade="all, delete-orphan")
+
+    order_products: Mapped[list[OrderProductsModel]] = relationship("OrderProductsModel", back_populates="product", cascade="all, delete-orphan")
 
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, onupdate=datetime.utcnow)

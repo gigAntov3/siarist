@@ -72,3 +72,21 @@ async def decrease_quantity(
         return AnswerSchema(ok=False, message="Quantity decrease failed")
     
     return AnswerSchema(ok=True, message="Quantity decreased successfully")
+
+
+@router.delete("/")
+async def delete_baskets(
+    basket_service: Annotated[BasketService, Depends(basket_service)],
+    user_id: int = Query(None, ge=1),
+) -> AnswerSchema:
+    await basket_service.delete_baskets()
+    return AnswerSchema(ok=True, message="Baskets deleted successfully")
+
+
+@router.delete("/{basket_id}")
+async def delete_basket(
+    basket_id: int,
+    basket_service: Annotated[BasketService, Depends(basket_service)],
+) -> AnswerSchema:
+    await basket_service.delete_basket(basket_id)
+    return AnswerSchema(ok=True, message="Basket deleted successfully")

@@ -89,3 +89,11 @@ class SQLAlchemyRepository(BaseRepository):
             await session.execute(stmt)
             await session.commit()
             return True
+        
+
+    async def delete_all(self, **filters) -> bool:
+        async with async_session_maker() as session:
+            stmt = delete(self.model).where(and_(*[getattr(self.model, key) == value for key, value in filters.items()]))
+            await session.execute(stmt)
+            await session.commit()
+            return True

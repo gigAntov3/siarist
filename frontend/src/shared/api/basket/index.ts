@@ -25,3 +25,15 @@ export const decreaseBasketQuantity = async (id: number): Promise<Boolean> => {
     const response = await httpClient.post<Answer>(`basket/${id}/decrease`);
     return response.data.ok;
 }
+
+
+export const deleteBaskets = async (user_id: number): Promise<Boolean> => {
+    const response = await httpClient.delete<Answer>(`basket/`, { params: { user_id } });
+    return response.data.ok;
+}
+
+
+export const deleteBasket = async (id: number): Promise<Boolean> => {
+    const response = await httpClient.delete<Answer>(`basket/${id}`);
+    return response.data.ok;
+}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createPortal } from "react-dom";
 
 import BankCardIcon from "./assets/bank-card.svg?react";
@@ -9,61 +8,69 @@ import ChevronLeftIcon from "./assets/chevron-left.svg?react";
 
 import styles from "./styles.module.css";
 
-export const PaymentMethodModal = ({ onClose }: { onClose: () => void }) => {
-  const [method, setMethod] = useState("Банковская карта");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMethod(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    onClose();
-    // Здесь можно вызвать логику оплаты или редирект
-  };
-
+export const PaymentMethodModal = ({
+  onClose,
+  selectedMethod,
+  setSelectedMethod,
+  onSelect,
+}: {
+  onClose: () => void;
+  selectedMethod: string | null;
+  setSelectedMethod: (method: string) => void;
+  onSelect: (method: string) => void;
+}) => {
   const methods = [
     {
+      code: "card",
       name: "Банковская карта",
       icon: <BankCardIcon className={styles.methodIcon} />,
     },
     {
+      code: "sbp",
       name: "СБП / QR-код",
       icon: <SbpIcon className={styles.methodIcon} />,
     },
   ];
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedMethod(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (selectedMethod) {
+      onSelect(selectedMethod);
+    }
+  };
+
   return createPortal(
     <div className={styles.modalOverlay} onClick={onClose}>
-      <div
-        className={styles.modalContent}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <ChevronLeftIcon className={styles.backIcon} onClick={onClose} />
           <h2 className={styles.title}>Способы оплаты</h2>
         </div>
 
         <div className={styles.radioGroup}>
-          {methods.map(({ name, icon }) => (
-            <label key={name} className={styles.radioItem}>
+          {methods.map(({ code, name, icon }) => (
+            <label key={code} className={styles.radioItem}>
               <span className={styles.radioName}>
                 {icon}
                 {name}
               </span>
               <div
                 className={`${styles.radioCustom} ${
-                  method === name ? styles.radioSelected : ""
+                  selectedMethod === code ? styles.radioSelected : ""
                 }`}
-                onClick={() => setMethod(name)}
+                onClick={() => setSelectedMethod(code)}
               >
-                {method === name ? (
+                {selectedMethod === code ? (
                   <CheckIcon className={styles.chevronIcon} />
                 ) : (
                   <input
                     type="radio"
                     name="paymentMethod"
-                    value={name}
-                    checked={method === name}
+                    value={code}
+                    checked={selectedMethod === code}
                     onChange={handleChange}
                     className={styles.radioInput}
                   />

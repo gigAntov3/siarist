@@ -5,15 +5,24 @@ import ProductImage from '../../assets/product.png';
 import styles from "./styles.module.css";
 
 type Props = {
-    basketId: number
-    name: string;
-    price: number;
-    quantity: number;
-    photo: string
-    onQuantityChange?: (newQuantity: number) => void;
-}
+  basketId: number;
+  name: string;
+  price: number;
+  quantity: number;
+  photo: string;
+  onQuantityChange?: (newQuantity: number) => void;
+  onDelete?: () => void;
+};
 
-export const BasketProductCard = ({ basketId, name, price, quantity, photo, onQuantityChange }: Props) => {
+export const BasketProductCard = ({
+  basketId,
+  name,
+  price,
+  quantity,
+  photo,
+  onQuantityChange,
+  onDelete,
+}: Props) => {
   return (
     <div className={styles.productItem}>
       <img className={styles.productImage} src={photo || ProductImage} alt="product" />
@@ -27,6 +36,7 @@ export const BasketProductCard = ({ basketId, name, price, quantity, photo, onQu
         basketId={basketId}
         quantity={quantity}
         onQuantityChange={onQuantityChange}
+        onDelete={onDelete}
       />
     </div>
   );
