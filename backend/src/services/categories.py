@@ -23,3 +23,7 @@ class CategoriesService:
     async def get_categories(self, limit: Optional[int] = None, offset: Optional[int] = None):
         categories = await self.categories_repo.find_all(limit=limit, offset=offset)
         return categories
+    
+
+    async def delete_category(self, category_id: int):
+        await self.categories_repo.delete_one(category_id)

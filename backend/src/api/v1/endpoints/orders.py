@@ -9,8 +9,10 @@ from schemas.orders import (
     AnswerOrderSchema,
 )
 
+from services.users import UsersService
 from services.orders import OrdersService
 
+from api.v1.dependencies.users import users_service
 from api.v1.dependencies.orders import orders_service
 
 
@@ -23,9 +25,18 @@ router = APIRouter(
 @router.post("/")
 async def add_order(
     order: OrderAddSchema, 
-    orders_service: OrdersService = Depends(orders_service)
+    orders_service: OrdersService = Depends(orders_service),
+    user_service: UsersService = Depends(users_service)
 ) -> AnswerOrderAddSchema:
     order_id = await orders_service.add_order(order)
+
+    if order.withdrawn_bonuses > 0:
+        await user_service.decrease_balance(order.user_id, order.withdrawn_bonuses)
+
+    await user_service.increase_purchases_count(order.user_id)
+
+    await user_service.apply_purchase_bonuses(order.user_id)
+
     return AnswerOrderAddSchema(ok=True, message="Order added", order_id=order_id)
 
 

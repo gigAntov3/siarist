@@ -23,3 +23,6 @@ class FeedbacksService:
         feedbacks = await self.feedbacks_repo.find_all(limit=limit, offset=offset, order_by="priority")
         return feedbacks
     
+
+    async def delete_feedback(self, feedback_id: int):
+        await self.feedbacks_repo.delete_one(id=feedback_id)

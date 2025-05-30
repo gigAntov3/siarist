@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Query
 
 from typing import Annotated
 
+from schemas import AnswerSchema
 from schemas.categories import (
     CategorySchema,
     AnswerCategorySchema,
@@ -47,3 +48,12 @@ async def get_category(
 ) -> AnswerCategorySchema:
     category = await categories_service.get_category(category_id)
     return AnswerCategorySchema(ok=True, message="Category retrieved successfully", category=category)
+
+
+@router.delete("/{category_id}")
+async def delete_category(
+    category_id: int,
+    categories_service: Annotated[CategoriesService, Depends(categories_service)],
+) -> AnswerSchema:
+    await categories_service.delete_category(category_id)
+    return AnswerSchema(ok=True, message="Category deleted successfully")

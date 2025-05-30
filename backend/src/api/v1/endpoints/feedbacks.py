@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Query
 
 from typing import Annotated
 
+from schemas import AnswerSchema
 from schemas.feedbacks import (
     FeedbackAddSchema, 
     AnswerFeedbackAddSchema, 
@@ -38,8 +39,6 @@ async def get_feedback(
     feedback = await feedbacks_service.get_feedback(feedback_id)
     return AnswerFeedbackSchema(ok=True, message="Feedback retrieved", feedback=feedback)
 
-import time
-
 @router.get("")
 async def get_feedbacks(
     feedbacks_service: FeedbacksService = Depends(feedbacks_service),
@@ -48,3 +47,12 @@ async def get_feedbacks(
 ) -> AnswerFeedbacksSchema:
     feedbacks = await feedbacks_service.get_feedbacks(limit=limit, offset=offset)
     return AnswerFeedbacksSchema(ok=True, message="Feedbacks retrieved", feedbacks=feedbacks)
+
+
+@router.delete("/{feedback_id}")
+async def delete_feedback(
+    feedback_id: int, 
+    feedbacks_service: FeedbacksService = Depends(feedbacks_service)
+) -> AnswerSchema:
+    await feedbacks_service.delete_feedback(feedback_id)
+    return AnswerSchema(ok=True, message="Feedback deleted")
