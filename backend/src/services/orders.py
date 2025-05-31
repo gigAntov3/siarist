@@ -23,3 +23,7 @@ class OrdersService:
     async def get_order(self, order_id: int):
         order = await self.orders_repo.find_one(order_id)
         return order
+    
+
+    async def update_payment_status(self, order_id: int, payment_status: str):
+        return await self.orders_repo.update_payment_status(order_id, payment_status)

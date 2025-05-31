@@ -1,5 +1,5 @@
 from sqlalchemy import insert, asc, and_
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import joinedload
 
 from utils.repository import SQLAlchemyRepository
@@ -77,3 +77,16 @@ class OrdersRepository(SQLAlchemyRepository):
             result = await session.execute(stmt)
             result = result.unique()
             return result.scalar_one().to_read_model()
+        
+
+    async def update_payment_status(self, id: int, payment_status: str) -> bool:
+        async with async_session_maker() as session:
+            stmt = (
+                update(self.model)
+                .where(self.model.id == id)
+                .values(payment_status=payment_status)
+                .returning(self.model.id)
+            )
+            result = await session.execute(stmt)
+            await session.commit()
+            return True

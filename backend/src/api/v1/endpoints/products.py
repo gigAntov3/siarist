@@ -25,7 +25,7 @@ router = APIRouter(
 
 
 @router.post("")
-async def add_profile(
+async def add_product(
     product: ProductAddSchema,
     products_service: Annotated[ProductsService, Depends(products_service)]
 ) -> AnswerProductAddSchema:
@@ -34,7 +34,7 @@ async def add_profile(
 
 
 @router.get("")
-async def get_profiles(
+async def get_products(
     products_service: Annotated[ProductsService, Depends(products_service)],
     category_id: Optional[int] = Query(None, description="Filter products by category ID"),
     limit: int = Query(10, ge=1),
@@ -45,7 +45,7 @@ async def get_profiles(
 
 
 @router.get("/{product_id}")
-async def get_profile(
+async def get_product(
     product_id: int,
     products_service: Annotated[ProductsService, Depends(products_service)],
 ) -> AnswerProductSchema:
@@ -54,7 +54,7 @@ async def get_profile(
 
 
 @router.patch("/{product_id}")
-async def update_profile(
+async def update_product(
     product_id: int,
     product: ProductUpdateSchema,
     products_service: Annotated[ProductsService, Depends(products_service)],
@@ -64,7 +64,7 @@ async def update_profile(
 
 
 @router.delete("/{product_id}")
-async def delete_profile(
+async def delete_product(
     product_id: int,
     products_service: Annotated[ProductsService, Depends(products_service)],
 ) -> AnswerProductDeleteSchema:

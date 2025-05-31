@@ -7,6 +7,7 @@ from .feedbacks import router as feedbacks_router
 from .basket import router as basket_router
 from .files import router as files_router
 from .orders import router as orders_router
+from .payments import router as payments_router
 
 router = APIRouter()
 
@@ -17,3 +18,4 @@ router.include_router(feedbacks_router)
 router.include_router(basket_router)
 router.include_router(files_router)
 router.include_router(orders_router)
+router.include_router(payments_router)

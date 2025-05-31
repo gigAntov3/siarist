@@ -136,12 +136,12 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
-    padding-left: 40px; /* место для иконки + отступ */
+    padding-left: 40px;
 }
 
 .milestoneIcon {
     position: absolute;
-    left: 6px; /* центрируем маленькие кружки по линии */
+    left: 6px;
     width: 8px;
     height: 8px;
 }
@@ -149,7 +149,7 @@
 .lastIcon {
     width: 18px;
     height: 18px;
-    left: 1px; /* центрируем большую иконку */
+    left: 1px;
 }
 
 .activeText {
