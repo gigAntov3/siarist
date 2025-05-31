@@ -16,11 +16,11 @@ async def start_client(message: types.Message, dialog_manager: DialogManager):
     builder = InlineKeyboardBuilder()
 
     builder.row(
-        InlineKeyboardButton(text='Подтвердить', callback_data='confirm:10')
+        InlineKeyboardButton(text='✅ Подтвердить выполнение', callback_data='confirm:10')
     )
 
     builder.row(
-        InlineKeyboardButton(text='Отменить', callback_data='cancel:10')
+        InlineKeyboardButton(text='❌ Отменить заказ', callback_data='cancel:10')
     )
 
     await bot.send_message(message.chat.id, 'Добро пожаловать в магазин!', reply_markup=builder.as_markup())

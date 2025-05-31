@@ -11,6 +11,7 @@ import ExplosionIcon from './assets/explosion.svg?react';
 import { TabBar } from '../../shared/ui/tabbar';
 import { getUser } from '../../shared/api/users';
 import { BonusCard } from '../../shared/ui/bonus-card';
+import { Link } from 'react-router-dom';
 
 export const BonusPage = () => {
     const [completedPurchases, setCompletedPurchases] = useState<number>(0);
@@ -90,7 +91,9 @@ export const BonusPage = () => {
             <div className={styles.reviewReward}>
                 Получите <strong>25 ₽</strong> за первый отзыв после 2-й покупки
             </div>
-            <button className={styles.button}>К товарам</button>
+            <Link to="/">
+                <button className={styles.button}>К товарам</button>
+            </Link>
 
             <hr className={styles.separator} />
 

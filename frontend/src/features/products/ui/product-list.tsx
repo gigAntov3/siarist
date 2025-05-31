@@ -49,6 +49,7 @@ export const ProductList = ({ title, category_id }: Props) => {
                         name={product.name}
                         price={product.price}
                         image={product.photo || ProductImage}
+                        tag={product.tag}
                     />
                 ))}
             </div>

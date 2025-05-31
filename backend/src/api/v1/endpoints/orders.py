@@ -59,3 +59,10 @@ async def get_order(
 ) -> AnswerOrderSchema:
     order = await orders_service.get_order(order_id)
     return AnswerOrderSchema(ok=True, message="Order retrieved successfully", order=order)
+
+
+
+# https://pay.freekassa.net/?m=62587&oa=100&o=12345&s=dd862529168d6e8599e0d29ece40f718&currency=RUB
+
+
+# K2fgAzooTocB9eT

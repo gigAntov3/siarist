@@ -125,9 +125,9 @@
     content: '';
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 0px;
     left: 10px; /* линия */
-    width: 2px;
+    width: 1px;
     background-color: #333;
 }
 

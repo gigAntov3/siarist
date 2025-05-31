@@ -1,17 +1,48 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from './product-card.module.css';
+
+import BestPriceIcon from '../assets/best-price.svg?react';
+import NewIcon from '../assets/new.svg?react';
+import HitIcon from '../assets/hit.svg?react';
 
 type Props = {
     id: number;
     name: string;
     price: number;
     image: string;
+    tag?: string; // e.g. ["best", "new", "hit"]
 };
 
-export const ProductCard = ({ id, name, price, image }: Props) => {
+export const ProductCard = ({ id, name, price, image, tag }: Props) => {
+    const tagComponents = {
+        best: {
+            icon: <BestPriceIcon />,
+            label: "ЛУЧШАЯ ЦЕНА",
+        },
+        new: {
+            icon: <NewIcon />,
+            label: "НОВОЕ",
+        },
+        hit: {
+            icon: <HitIcon />,
+            label: "ХИТ ПРОДАЖ",
+        },
+    };
+
     return (
         <div className={styles.card}>
-            <img src={image} alt="product" />
+            <div className={styles.imageWrapper}>
+                <img src={image} alt="product" />
+
+                {tag && tag in tagComponents && (
+                    <div className={`${styles.tag} ${styles[tag]}`}>
+                        {React.cloneElement(tagComponents[tag].icon, { className: styles[tag] })}
+                        <span className={styles[tag]}>{tagComponents[tag].label}</span>
+                    </div>
+                )}
+            </div>
+
             <span className={styles.name}>{name}</span>
             <span className={styles.price}>{price.toLocaleString("ru-RU")} ₽</span>
             <Link className={styles.buyButton} to={`/product/${id}`}>

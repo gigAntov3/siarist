@@ -8,19 +8,56 @@
 
 .feedbackContainer {
     background-color: #212121;
-    padding: 32px 24px;
-    border-radius: 24px;
+    padding: 32px 24px 44px 24px;
+    border-radius: 24px 24px 0 0;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
 }
 
+
+.titleWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 16px;
+    background-color: #212121;
+}
 
 .feedbackTitle {
     font-size: 20px;
     font-weight: bold;
     color: #ffffff;
     background-color: #212121;
-    margin-bottom: 16px;
-    display: block;
-    margin-bottom: 16px;
+    margin: 0;
+}
+
+.numberReviews {
+    margin-left: 10px;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: #009c70;
+    padding: 5px 16px;
+    border-radius: 40px;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+
+.feedback {
+    background-color: #212121;
+}
+
+
+.feedbackButton {
+    width: 100%;
+    background-color: #171717;
+    border: 1px solid #171717;
+    border-radius: 100px;
+    padding: 16px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    justify-content: center;
+    display: flex
 }
