@@ -13,14 +13,15 @@ const adaptFeedback = (raw) => ({
     year: "numeric",
   }),
   text: raw.content,
-  userName: `${raw.author.first_name} ${raw.author.last_name}`,
+  userName: raw.author.username,
 });
 
 export const FeedbackPage = observer(() => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    feedbackStore.loadMore(); // начальная загрузка
+    feedbackStore.loadMore();
+    feedbackStore.loadCount(); // получаем общее количество отзывов
   }, []);
 
   useEffect(() => {
@@ -45,7 +46,9 @@ export const FeedbackPage = observer(() => {
       <div className={styles.feedbackContainer}>
         <div className={styles.titleWrapper}>
           <span className={styles.feedbackTitle}>Отзывы</span>
-          <span className={styles.numberReviews}>5000</span>
+          <span className={styles.numberReviews}>
+            {feedbackStore.totalCount}
+          </span>
         </div>
 
         {feedbackStore.feedbacks.map((fb, idx) => {

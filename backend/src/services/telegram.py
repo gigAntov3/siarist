@@ -6,7 +6,7 @@ from aiogram.types import InlineKeyboardButton
 
 from schemas.orders import OrderSchema
 
-from utils.messages import get_order_message
+from utils.messages import get_order_message, get_payment_message
 
 
 class TelegramService:
@@ -33,5 +33,14 @@ class TelegramService:
             reply_markup=builder.as_markup(),
             parse_mode="Markdown"
         )
+
+    
+    async def send_payment_info_to_user(self, order: OrderSchema):
+        await self.bot.send_message(
+            chat_id=order.user.chat_id, 
+            text=get_payment_message(order), 
+            parse_mode="Markdown"    
+        )
+        
 
 

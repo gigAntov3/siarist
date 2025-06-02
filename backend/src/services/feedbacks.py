@@ -26,3 +26,8 @@ class FeedbacksService:
 
     async def delete_feedback(self, feedback_id: int):
         await self.feedbacks_repo.delete_one(id=feedback_id)
+
+
+    async def get_feedbacks_count(self):
+        count = await self.feedbacks_repo.count_all()
+        return count

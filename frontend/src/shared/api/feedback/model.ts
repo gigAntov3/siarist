@@ -18,3 +18,8 @@ export type AnswerFeedbacks = {
 }
 
 
+export type AnswerFeedbacksCount = {
+    ok: boolean
+    message: string
+    count: number
+}

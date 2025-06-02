@@ -14,6 +14,7 @@ import { getUser } from '../../shared/api/users';
 import { PaymentMethodModal } from '../../widgets/payment-method-modal';
 import { EnterAccountModal } from '../../widgets/enter-account-modal';
 import { addOrder } from '../../shared/api/orders';
+import { getPaymentLink } from '../../shared/api/payments';
 
 export const BusketPage = () => {
   const [baskets, setBaskets] = useState<Basket[]>([]);
@@ -28,6 +29,7 @@ export const BusketPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [order, setOrder] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,11 +108,24 @@ export const BusketPage = () => {
     };
 
     try {
-      await addOrder(orderData);
+      const order_id = await addOrder(orderData);
+
+      setOrder(order_id);
+
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      const ip = ipData.ip;
+
+      if (order_id === null) throw new Error("Order ID is null");
+
+      const paymentLink = await getPaymentLink(method, order_id, totalPriceAfterBonuses, email, ip);
+      console.log('paymentLink:', paymentLink);
+
       await deleteBaskets(1);
-      setBaskets([]);
+      
+      window.location.replace(paymentLink);
     } catch (err) {
-      console.error('Ошибка при создании заказа:', err);
+      console.error('Ошибка при создании заказа или получении ссылки на оплату:', err);
       setError('Ошибка при создании заказа');
     }
   };

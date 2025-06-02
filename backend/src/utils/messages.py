@@ -35,3 +35,11 @@ def get_order_message(order: OrderSchema) -> str:
     message += f"🕒 *Время заказа:* `{order.created_at.strftime("%d.%m.%Y, %H:%M")}`"
 
     return message
+
+
+
+def get_payment_message(order: OrderSchema) -> str:
+    if order.payment_status == "success":
+        return "Ваш платеж прошел успешно!"
+    else:
+        return "Ваш платеж не прошел!"

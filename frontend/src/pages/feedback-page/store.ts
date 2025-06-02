@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { getFeedbacks } from "../../shared/api/feedback";
+import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback";
 import type { Feedback } from "../../shared/api/feedback/model";
 
 const LIMIT = 10;
@@ -10,6 +10,7 @@ class FeedbackStore {
   loading = false;
   hasMore = true;
   error: string | null = null;
+  totalCount = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -30,6 +31,10 @@ class FeedbackStore {
     } finally {
       this.loading = false;
     }
+  }
+  
+  async loadCount() {
+    this.totalCount = await getFeedbacksCount();
   }
 }
 

@@ -9,7 +9,7 @@ interface Props {
 
 const maskUserName = (name: string) => {
     const length = name.length;
-    if (length === 0) return '';
+    if (length === 0) return '**********';
 
     const visibleLength = Math.ceil(length * 0.6);
     const maskedLength = length - visibleLength;
@@ -17,7 +17,14 @@ const maskUserName = (name: string) => {
     const visiblePart = name.slice(0, visibleLength);
     const maskedPart = '*'.repeat(maskedLength);
 
-    return visiblePart + maskedPart;
+    let maskedName = visiblePart + maskedPart;
+
+    // Если итоговая длина меньше 10, дополняем звёздами
+    if (maskedName.length < 10) {
+        maskedName += '*'.repeat(10 - maskedName.length);
+    }
+
+    return maskedName;
 };
 
 export const FeedbackCard = ({ date, text, userName }: Props) => (

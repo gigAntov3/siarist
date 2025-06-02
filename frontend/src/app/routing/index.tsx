@@ -6,7 +6,6 @@ import { FeedbackPage } from "../../pages/feedback-page";
 import { BusketPage } from "../../pages/basket-page";
 import { BonusPage } from "../../pages/bonus-page";
 import { PaymentStatusPage } from "../../pages/payment-status-page";
-import { EnterDataPage } from "../../pages/enter-data-page";
 
 
 export const router = createBrowserRouter([
@@ -35,13 +34,9 @@ export const router = createBrowserRouter([
                 element: <BonusPage />,
             },
             {
-                path: "payment-status",
+                path: "payments",
                 element: <PaymentStatusPage />,
             },
-            {
-                path: "enter-data",
-                element: <EnterDataPage />,
-            }
         ],
     },
 ]);

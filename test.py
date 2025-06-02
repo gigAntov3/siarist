@@ -1,50 +1,70 @@
-import time
-import hmac
-import hashlib
-import requests
+import aiohttp
+import asyncio
 
-API_KEY = "8e79422fb7bc7f93317f221af98348b5"
-SHOP_ID = 62587
-
-email = 'vladss17114@mail.ru'
-ip = '95.141.32.101'
-amount = 1000
-currency = 'RUB'
+from pydantic import BaseModel
 
 
-data = {
-    "shopId": SHOP_ID,
-    "nonce": int(time.time()),
-    "i": 6,
-    "email": email,
-    "ip": ip,
-    "amount": amount,
-    "currency": currency,
-}
+class AnswerPallyCreateBill(BaseModel):
+    success: bool
+    bill_id: str
+    link_url: str
+    link_page_url: str
+
+    class Config:
+        from_attributes = True
 
 
-# Сортировка и формирование строки для подписи
-sorted_items = dict(sorted(data.items()))
-sign_string = '|'.join(str(value) for value in sorted_items.values())
 
-# Создание подписи HMAC-SHA256
-signature = hmac.new(
-    API_KEY.encode("utf-8"),
-    sign_string.encode("utf-8"),
-    hashlib.sha256
-).hexdigest()
+class PallyClient:
+    BASE_URL = "https://pal24.pro/api/v1"
 
-data["signature"] = signature
+    def __init__(self, shop_id: str, api_key: str):
+        self.shop_id = shop_id
+        self.api_key = api_key
+        self.headers = {
+            "Authorization": f"Bearer {self.api_key}"
+        }
 
-response = requests.post(
-    'https://api.fk.life/v1/orders/create',
-    json=data,
-    timeout=10
-)
+    async def create_bill(self, amount: int, currency: str, order_id: str) -> AnswerPallyCreateBill:
+        url = f"{self.BASE_URL}/bill/create"
+        data = {
+            "shop_id": self.shop_id,
+            "amount": amount,
+            "currency": currency,
+            "order_id": order_id
+        }
 
-if response.ok:
-    result = response.json()
-else:
-    result = {'error': response.text}
+        async with aiohttp.ClientSession(headers=self.headers) as session:
+            async with session.post(url, data=data) as response:
+                return AnswerPallyCreateBill(**await response.json())
+            
 
-print(result)
+    async def get_status(self, bill_id: str) -> dict:
+        url = f"{self.BASE_URL}/bill/status/"
+
+        data = {
+            'id': "rvNw9Lxrm0"
+        }
+        
+        async with aiohttp.ClientSession(headers=self.headers) as session:
+            async with session.get(url, params=data) as response:
+                return await response.json()
+
+# Пример использования
+async def main():
+    shop_id = "kd71ZWyv1K"
+    api_key = "23212|1bUrTxfWReibMVjlqUdfYkBroGbDDmCuYzFYgw6L"
+
+    bill_id = "R2Pa9g197w"
+    
+    client = PallyClient(shop_id, api_key)
+
+    # payment = await client.create_bill(amount=100, currency="RUB", order_id="1")
+    # print(payment)
+
+    response = await client.get_status("rvNw9Lxrm0")
+    print(response)
+
+# Запуск
+if __name__ == "__main__":
+    asyncio.run(main())

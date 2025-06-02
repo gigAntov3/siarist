@@ -9,6 +9,7 @@ from schemas.feedbacks import (
     FeedbackSchema, 
     AnswerFeedbackSchema,
     AnswerFeedbacksSchema, 
+    AnswerFeedbacksCountSchema
 )
 
 from services.feedbacks import FeedbacksService
@@ -29,6 +30,14 @@ async def add_feedback(
 ) -> AnswerFeedbackAddSchema:
     feedback_id = await feedbacks_service.add_feedback(feedback)
     return AnswerFeedbackAddSchema(ok=True, message="Feedback added", feedback_id=feedback_id)
+
+@router.get("/count")
+async def get_feedbacks_count(
+    feedbacks_service: FeedbacksService = Depends(feedbacks_service),
+) -> AnswerFeedbacksCountSchema:
+    count = await feedbacks_service.get_feedbacks_count()
+    return AnswerFeedbacksCountSchema(ok=True, message="Feedbacks count retrieved", count=count)
+
 
 
 @router.get("/{feedback_id}")

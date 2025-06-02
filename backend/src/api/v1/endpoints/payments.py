@@ -4,8 +4,13 @@ import hashlib
 import requests
 from fastapi import APIRouter, Query, HTTPException, Request, Depends
 
+from utils.payments import FreeKassaClient, PallyClient
 from schemas import AnswerSchema
-from schemas.payments import FreeKassaPaymentSchema, InputFreeKassaPaymentSchema
+from schemas.payments import (
+    PaymentSchema, 
+    FreeKassaResultSchema,
+    PallyResultSchema
+)
 
 from services.orders import OrdersService
 from services.telegram import TelegramService
@@ -18,64 +23,49 @@ router = APIRouter(
     tags=["Payments"],
 )
 
-API_KEY = "8e79422fb7bc7f93317f221af98348b5"
-SHOP_ID = 62587
-FREE_KASSA_API_URL = 'https://api.fk.life/v1/orders/create'
+FREEKASSA_SHOP_ID = 62587
+FREEKASSA_API_KEY = "8e79422fb7bc7f93317f221af98348b5"
+
+PALLY_SHOP_ID = "kd71ZWyv1K"
+PALLY_API_KEY = "23212|1bUrTxfWReibMVjlqUdfYkBroGbDDmCuYzFYgw6L"
 
 
-def build_payment_data(order_id: int, amount: int, currency: str, email: str, ip: str) -> dict:
-    return {
-        "shopId": SHOP_ID,
-        "nonce": int(time.time()),
-        "i": 6,
-        "email": email,
-        "ip": ip,
-        "amount": amount,
-        "currency": currency,
-        "us_order_id": order_id
-    }
-
-
-def generate_signature(data: dict, api_key: str) -> str:
-    sorted_items = dict(sorted(data.items()))
-    sign_string = '|'.join(str(value) for value in sorted_items.values())
-    return hmac.new(
-        api_key.encode("utf-8"),
-        sign_string.encode("utf-8"),
-        hashlib.sha256
-    ).hexdigest()
-
-
-def create_payment_request(data: dict) -> dict:
-    response = requests.post(
-        FREE_KASSA_API_URL,
-        json=data,
-        timeout=10
-    )
-    if response.ok:
-        return response.json()
-    else:
-        raise HTTPException(status_code=400, detail={'error': response.text})
-
-
-@router.get("/", response_model=FreeKassaPaymentSchema)
+@router.get("/")
 async def get_payment_link(
+    method: str = Query(...),
     order_id: int = Query(...),
     amount: int = Query(...),
     currency: str = Query(..., min_length=3, max_length=3),
     email: str = Query(...),
     ip: str = Query(...),
-) -> FreeKassaPaymentSchema:
-    data = build_payment_data(order_id, amount, currency, email, ip)
-    data["signature"] = generate_signature(data, API_KEY)
-    result = create_payment_request(data)
-    return FreeKassaPaymentSchema(url=result["location"])
+) -> PaymentSchema:
+    if method == "sbp":
+        client = FreeKassaClient(FREEKASSA_SHOP_ID, FREEKASSA_API_KEY)
+
+        payment = await client.create_payment(
+            order_id=order_id,
+            amount=amount,
+            currency=currency,
+            email=email,
+            ip=ip
+        )
+
+    elif method == "card":
+        client = PallyClient(PALLY_SHOP_ID, PALLY_API_KEY)
+
+        payment = await client.create_payment(
+            order_id=order_id,
+            amount=amount,
+            currency=currency,
+        )
+
+    return payment
 
 
 
 
-@router.post("/")
-async def debug(
+@router.post("/freekassa")
+async def freekassa_callback(
     request: Request,
     orders_service: OrdersService = Depends(orders_service),
     telegram_service: TelegramService = Depends(telegram_service),
@@ -83,17 +73,18 @@ async def debug(
     form = await request.form()
     body_data = dict(form)
 
-    payment = InputFreeKassaPaymentSchema(
+    payment = FreeKassaResultSchema(
         order_id=body_data["us_order_id"],
         merchant_id=body_data["MERCHANT_ID"],
         merchant_order_id=body_data["MERCHANT_ORDER_ID"],
         amount=body_data["AMOUNT"],
         email=body_data["P_EMAIL"],
     )
+    await orders_service.update_payment_status(payment.order_id, "success")
 
     order = await orders_service.get_order(payment.order_id)
 
-    await orders_service.update_payment_status(payment.order_id, "success")
+    await telegram_service.send_payment_info_to_user(order)
 
     await telegram_service.send_order_to_admin(order)
 
@@ -101,9 +92,34 @@ async def debug(
 
 
 
-    
+@router.post("/pally")
+async def pally_callback(
+    request: Request,
+    orders_service: OrdersService = Depends(orders_service),
+    telegram_service: TelegramService = Depends(telegram_service),
+):
+    form = await request.form()
+    body_data = dict(form)
 
+    payment = PallyResultSchema(
+        status=body_data["Status"],
+        order_id=int(body_data["InvId"]),
+        commission=float(body_data["Commission"]),
+        currency=body_data["Currency"],
+        out_sum=float(body_data["OutSum"]),
+        trs_id=body_data["TrsId"],
+        signature=body_data["SignatureValue"],
+    )
+    await orders_service.update_payment_status(payment.order_id, "success")
 
+    order = await orders_service.get_order(payment.order_id)
 
+    if payment.status == "SUCCESS":
+        await telegram_service.send_payment_info_to_user(order)
+        await telegram_service.send_order_to_admin(order)
 
-# https://pay.freekassa.net/?m=62587&oa=1000&o=12345&s=0fdd58a59e26b136bbe164a4c6191c18&currency=RUB&us_order_id=16
+        return AnswerSchema(ok=True, message="Payment success")
+    else:
+        await orders_service.update_payment_status(payment.order_id, "failed")
+
+        return AnswerSchema(ok=True, message="Payment failed")

@@ -6,17 +6,19 @@ import { Separator } from '../../shared/ui/separator';
 import { FeedbackCard } from '../../features/feedback/ui/feedback-card';
 import { Catalog } from '../../widgets/catalog/ui';
 import type { Feedback } from "../../shared/api/feedback/model";
-import { getFeedbacks } from "../../shared/api/feedback";
+import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback"; // ⬅️ добавили getFeedbacksCount
 import { Link } from "react-router-dom";
 
 export const HomePage = () => {
     const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+    const [feedbackCount, setFeedbackCount] = useState<number>(0); // ⬅️ новое состояние
 
     const offset = 0;
     const limit = 3;
 
     useEffect(() => {
         loadFeedbacks();
+        loadFeedbackCount(); // ⬅️ загрузка количества отзывов
     }, []);
 
     const loadFeedbacks = async () => {
@@ -24,16 +26,20 @@ export const HomePage = () => {
         setFeedbacks(newFeedbacks);
     };
 
+    const loadFeedbackCount = async () => {
+        const count = await getFeedbacksCount();
+        setFeedbackCount(count);
+    };
+
     return (
         <div className={styles.wrapper}>
             <PromoCarousel />
-
             <Catalog />
 
             <div className={styles.feedbackContainer}>
                 <div className={styles.titleWrapper}>
                     <span className={styles.feedbackTitle}>Отзывы</span>
-                    <span className={styles.numberReviews}>5000</span>
+                    <span className={styles.numberReviews}>{feedbackCount}</span>
                 </div>
 
                 {feedbacks.map((feedback, index) => (

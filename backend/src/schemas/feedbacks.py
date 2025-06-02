@@ -42,3 +42,9 @@ class AnswerFeedbacksSchema(BaseModel):
     ok: bool
     message: str
     feedbacks: List[FeedbackSchema]
+
+
+class AnswerFeedbacksCountSchema(BaseModel):
+    ok: bool
+    message: str
+    count: int

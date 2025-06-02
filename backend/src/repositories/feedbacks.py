@@ -1,7 +1,7 @@
 from typing import Optional
 
 from sqlalchemy.orm import joinedload, selectinload
-from sqlalchemy import and_, select, asc
+from sqlalchemy import and_, select, asc, func
 
 from database import async_session_maker
 
@@ -42,3 +42,15 @@ class FeedbackRepository(SQLAlchemyRepository):
             result = await session.execute(stmt)
             feedback_obj = result.scalar_one()
             return feedback_obj.to_read_model()
+        
+
+    async def count_all(self, **filters) -> int:
+        async with async_session_maker() as session:
+            stmt = select(func.count()).select_from(self.model)
+
+            if filters:
+                conditions = [getattr(self.model, key) == value for key, value in filters.items()]
+                stmt = stmt.where(and_(*conditions))
+
+            result = await session.execute(stmt)
+            return result.scalar_one()
