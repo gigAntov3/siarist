@@ -82,4 +82,7 @@
     text-align: center;
     color: #fff;
     border-radius: 40px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
 }

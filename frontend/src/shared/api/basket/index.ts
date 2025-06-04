@@ -9,31 +9,31 @@ export const getBaskets = async (): Promise<Basket[]> => {
 };
 
 
-export const addProductToBasket = async (user_id: number, product_id: number, quantity: number): Promise<Number | null> => {
+export const addProductToBasket = async (user_id: number, product_id: number, quantity: number): Promise<number | null> => {
     const response = await httpClient.post<AnswerAddBasket>(`basket`, { user_id, product_id, quantity });
     return response.data.basket_id;
 }
 
 
-export const increaseBasketQuantity = async (id: number): Promise<Boolean> => {
+export const increaseBasketQuantity = async (id: number): Promise<boolean> => {
     const response = await httpClient.post<Answer>(`basket/${id}/increase`);
     return response.data.ok;
 }
 
 
-export const decreaseBasketQuantity = async (id: number): Promise<Boolean> => {
+export const decreaseBasketQuantity = async (id: number): Promise<boolean> => {
     const response = await httpClient.post<Answer>(`basket/${id}/decrease`);
     return response.data.ok;
 }
 
 
-export const deleteBaskets = async (user_id: number): Promise<Boolean> => {
+export const deleteBaskets = async (user_id: number): Promise<boolean> => {
     const response = await httpClient.delete<Answer>(`basket/`, { params: { user_id } });
     return response.data.ok;
 }
 
 
-export const deleteBasket = async (id: number): Promise<Boolean> => {
+export const deleteBasket = async (id: number): Promise<boolean> => {
     const response = await httpClient.delete<Answer>(`basket/${id}`);
     return response.data.ok;
 }

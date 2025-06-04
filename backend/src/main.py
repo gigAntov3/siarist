@@ -23,7 +23,7 @@ async def verification_file():
     return "shop-verification-oa2QMqN2Al"
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(

@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+aiosqlite
+boto3
+python-multipart
+requests
+aiohttp
+aiogram

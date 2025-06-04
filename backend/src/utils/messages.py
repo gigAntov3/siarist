@@ -32,7 +32,7 @@ def get_order_message(order: OrderSchema) -> str:
 
     message += f"🕹️ *Ник в игре:* `{order.nickname}`\n\n"
 
-    message += f"🕒 *Время заказа:* `{order.created_at.strftime("%d.%m.%Y, %H:%M")}`"
+    message += f"🕒 *Время заказа:* {order.created_at.strftime('%d.%m.%Y, %H:%M')}"
 
     return message
 

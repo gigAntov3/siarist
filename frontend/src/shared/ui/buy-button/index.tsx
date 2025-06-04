@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 
-import PlusIcon from '../../assets/plus.svg?react';
-import MinusIcon from '../../assets/minus.svg?react';
+import { ReactComponent as PlusIcon } from '../../assets/plus.svg';
+import { ReactComponent as MinusIcon } from '../../assets/minus.svg';
 
 import {
     addProductToBasket,

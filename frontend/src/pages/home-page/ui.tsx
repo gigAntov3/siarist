@@ -6,19 +6,19 @@ import { Separator } from '../../shared/ui/separator';
 import { FeedbackCard } from '../../features/feedback/ui/feedback-card';
 import { Catalog } from '../../widgets/catalog/ui';
 import type { Feedback } from "../../shared/api/feedback/model";
-import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback"; // ⬅️ добавили getFeedbacksCount
+import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback";
 import { Link } from "react-router-dom";
 
 export const HomePage = () => {
     const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-    const [feedbackCount, setFeedbackCount] = useState<number>(0); // ⬅️ новое состояние
+    const [feedbackCount, setFeedbackCount] = useState<number>(0);
 
     const offset = 0;
     const limit = 3;
 
     useEffect(() => {
         loadFeedbacks();
-        loadFeedbackCount(); // ⬅️ загрузка количества отзывов
+        loadFeedbackCount();
     }, []);
 
     const loadFeedbacks = async () => {

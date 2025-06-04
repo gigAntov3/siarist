@@ -6,7 +6,15 @@ import { TabBar } from "../../shared/ui/tabbar";
 import styles from "./styles.module.css";
 import { feedbackStore } from "./store";
 
-const adaptFeedback = (raw) => ({
+type RawFeedback = {
+  created_at: string | Date;
+  content: string;
+  author: {
+    username: string;
+  };
+};
+
+const adaptFeedback = (raw: RawFeedback) => ({
   date: new Date(raw.created_at).toLocaleDateString("ru-RU", {
     day: "2-digit",
     month: "long",
@@ -38,7 +46,11 @@ export const FeedbackPage = observer(() => {
 
     const target = bottomRef.current;
     if (target) observer.observe(target);
-    return () => target && observer.unobserve(target);
+
+    // Always return a cleanup function
+    return () => {
+      if (target) observer.unobserve(target);
+    };
   }, []);
 
   return (

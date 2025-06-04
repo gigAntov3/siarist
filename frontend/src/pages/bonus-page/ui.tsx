@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import CardImage from './assets/card.png';
 import styles from './styles.module.css';
 
-import BlackCircleIcon from './assets/black-circle.svg?react';
-import GreenBlankCircleIcon from './assets/green-blank-circle.svg?react';
-import GreenCircleIcon from './assets/green-circle.svg?react';
-import ExplosionIcon from './assets/explosion.svg?react';
+import { ReactComponent as BlackCircleIcon } from './assets/black-circle.svg';
+import { ReactComponent as GreenBlankCircleIcon } from './assets/green-blank-circle.svg';
+import { ReactComponent as GreenCircleIcon } from './assets/green-circle.svg';
+import { ReactComponent as ExplosionIcon } from './assets/explosion.svg';
 
 import { TabBar } from '../../shared/ui/tabbar';
 import { getUser } from '../../shared/api/users';

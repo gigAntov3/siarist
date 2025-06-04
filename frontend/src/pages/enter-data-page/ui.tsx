@@ -2,8 +2,8 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
-import CheckIcon from "./assets/check.svg?react";
-import ChevronLeftIcon from "./assets/chevron-left.svg?react";
+import { ReactComponent as CheckIcon } from "./assets/check.svg";
+import { ReactComponent as ChevronLeftIcon } from "./assets/chevron-left.svg";
 
 import styles from "./styles.module.css";
 

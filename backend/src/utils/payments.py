@@ -55,8 +55,6 @@ from fastapi import HTTPException
 from schemas.payments import PaymentSchema
 
 
-
-
 class FreeKassaClient:
     BASE_URL = "https://api.fk.life/v1"
 
