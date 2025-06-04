@@ -1,10 +1,14 @@
 import { createPortal } from "react-dom";
 
-import BankCardIcon from "./assets/bank-card.svg?react";
-import SbpIcon from "./assets/sbp.svg?react";
+// import BankCardIcon from "./assets/bank-card.svg?react";
+import { ReactComponent as BankCardIcon } from "./assets/bank-card.svg";
+// import SbpIcon from "./assets/sbp.svg?react";
+import { ReactComponent as SbpIcon } from "./assets/sbp.svg";
 
-import CheckIcon from "./assets/check.svg?react";
-import ChevronLeftIcon from "./assets/chevron-left.svg?react";
+// import CheckIcon from "./assets/check.svg?react";
+import { ReactComponent as CheckIcon } from "./assets/check.svg";
+// import ChevronLeftIcon from "./assets/chevron-left.svg?react";
+import { ReactComponent as ChevronLeftIcon } from "./assets/chevron-left.svg";
 
 import styles from "./styles.module.css";
 

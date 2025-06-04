@@ -1,7 +1,9 @@
 import { createPortal } from "react-dom";
 
-import CheckIcon from "./assets/check.svg?react";
-import ChevronLeftIcon from "./assets/chevron-left.svg?react";
+// import CheckIcon from "./assets/check.svg?react";
+import { ReactComponent as CheckIcon } from "./assets/check.svg";
+// import ChevronLeftIcon from "./assets/chevron-left.svg?react";
+import { ReactComponent as ChevronLeftIcon } from "./assets/chevron-left.svg";
 
 import styles from "./styles.module.css";
 

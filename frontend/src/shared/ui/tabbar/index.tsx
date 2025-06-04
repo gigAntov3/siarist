@@ -1,13 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 
-// import HomeIcon from '../../assets/home.svg';
-// import StarIcon from '../../assets/star.svg';
-// import FeedbackIcon from '../../assets/feedback.svg';
-
-import { ReactComponent as HomeIcon } from  '../../assets/home.svg?component';
-import { ReactComponent as BusketIcon } from '../../assets/busket.svg?component';
-import { ReactComponent as StarIcon } from '../../assets/star.svg?component';
-import { ReactComponent as FeedbackIcon } from '../../assets/feedback.svg?component';
+import { ReactComponent as HomeIcon } from '../../assets/home.svg';
+import { ReactComponent as BusketIcon } from '../../assets/busket.svg';
+import { ReactComponent as StarIcon } from '../../assets/star.svg';
+import { ReactComponent as FeedbackIcon } from '../../assets/feedback.svg';
 
 import styles from './styles.module.css';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getCategories } from '../../shared/api/categories';
-import type { Category } from '../../shared/api/categories/model'; // Импортируем тип Category
+import type { Category } from '../../shared/api/categories/model';
 
 import { ProductList } from '../../features/products/ui/product-list';
 import { Separator } from '../../shared/ui/separator';

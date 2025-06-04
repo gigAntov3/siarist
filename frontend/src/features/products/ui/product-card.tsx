@@ -2,9 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from './product-card.module.css';
 
-import BestPriceIcon from '../assets/best-price.svg?react';
-import NewIcon from '../assets/new.svg?react';
-import HitIcon from '../assets/hit.svg?react';
+// import BestPriceIcon from '../assets/best-price.svg';
+import { ReactComponent as BestPriceIcon } from '../assets/best-price.svg';
+// import NewIcon from '../assets/new.svg';
+import { ReactComponent as NewIcon } from '../assets/new.svg';
+// import HitIcon from '../assets/hit.svg';
+import { ReactComponent as HitIcon } from '../assets/hit.svg';
+
 
 type Props = {
     id: number;

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import styles from './styles.module.css';
+
 import { TabBar } from '../../shared/ui/tabbar';
 import { PromoCarousel } from '../../widgets/promo-carousel';
 import { Separator } from '../../shared/ui/separator';
 import { FeedbackCard } from '../../features/feedback/ui/feedback-card';
 import { Catalog } from '../../widgets/catalog/ui';
 import type { Feedback } from "../../shared/api/feedback/model";
-import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback"; // ⬅️ добавили getFeedbacksCount
+import { getFeedbacks, getFeedbacksCount } from "../../shared/api/feedback";
 import { Link } from "react-router-dom";
+
+import styles from './styles.module.css';
 
 export const HomePage = () => {
     const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
