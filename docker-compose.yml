@@ -1,6 +1,10 @@
 networks:
   dev:
 
+volumes:
+  certbot-etc:
+  certbot-www:
+
 services:
   nginx:
     image: nginx
@@ -11,6 +15,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - certbot-etc:/etc/letsencrypt
       - certbot-www:/var/www/certbot
+      - ./frontend/build:/usr/share/nginx/html:ro
     depends_on:
       - backend
       - frontend
@@ -22,10 +27,17 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-www:/var/www/certbot
-    entrypoint: >
-      sh -c "certbot certonly --webroot --webroot-path=/var/www/certbot
-            --email your@email.com --agree-tos --no-eff-email
-            -d yourdomain.com"
+    entrypoint:
+      - certbot
+      - certonly
+      - --webroot
+      - --webroot-path=/var/www/certbot
+      - --email=your@email.com
+      - --agree-tos
+      - --no-eff-email
+      - -d
+      - corrdev.ru
+      - --non-interactive
     networks:
       - dev
 
@@ -34,7 +46,6 @@ services:
       context: ./backend
     networks:
       - dev
-
 
   frontend:
     build:
